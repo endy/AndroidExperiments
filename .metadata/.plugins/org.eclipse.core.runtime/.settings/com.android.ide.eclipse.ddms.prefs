@@ -1,0 +1,12 @@
+#Sat Feb 11 16:47:43 EST 2012
+logcat.view.colsize.Text=739
+logcat.view.colsize.Level=35
+logcat.view.colsize.Application=240
+logcat.view.colsize.PID=62
+logcat.view.colsize.Tag=133
+devicePanel.Col4=85
+logcat.view.colsize.Time=183
+devicePanel.Col1=60
+devicePanel.Col0=265
+eclipse.preferences.version=1
+logcat.view.filters.list=name\: 'GLES2Demos', tag\: '', text\: '', pid\: '', app\: 'com.brandonlight.gles2demos', level\: 'verbose', 
