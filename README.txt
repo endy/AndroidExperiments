@@ -8,4 +8,6 @@ Note:
 I checked in all Eclipse workspace files.  I plan to trim this down once I better understand the layout of Eclipse projects.
 
 
+License:
+See LICENSE.txt for details
 
