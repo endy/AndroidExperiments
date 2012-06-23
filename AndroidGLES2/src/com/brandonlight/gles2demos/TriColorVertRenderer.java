@@ -10,7 +10,6 @@ import java.nio.IntBuffer;
 
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
-
 import android.util.Log;
 
 public class TriColorVertRenderer implements GLSurfaceView.Renderer {

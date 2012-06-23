@@ -14,7 +14,8 @@ public class GLES2DemosActivitity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        mGLView = new TriColorVertView(this);
+        mGLView = new ParticleTestView(this);
+       //mGLView = new TriColorVertView(this);
         
         setContentView(mGLView);
     }
