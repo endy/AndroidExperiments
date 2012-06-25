@@ -94,6 +94,8 @@ public class ParticleTestRenderer implements GLSurfaceView.Renderer {
     {
     	float bounds = 1.0f;
     	
+    	timestep *= 3.0f;
+    	
     	// calculate new velocity with x/'friction' or y/'gravity' constants
     	float gravityDecel = 4.0f * timestep;
     	//float xFriction = 3.0f * timestep;
@@ -103,14 +105,14 @@ public class ParticleTestRenderer implements GLSurfaceView.Renderer {
     		int posIndex = i * 3;
             int velIndex = i * 3;
             
-    		mVelocities[velIndex+1] -= gravityDecel; // gravity is always negative
+    		//mVelocities[velIndex+1] -= gravityDecel; // gravity is always negative
     		
     		float x = mPositions[posIndex+0] + (mVelocities[velIndex+0] * timestep);
     		mPositions[posIndex+0] = Math.min(bounds, Math.max(-bounds, x));
 
     		if ((mPositions[posIndex+0] <= -bounds) || (mPositions[posIndex+0] >= bounds))
             {
-    			mVelocities[velIndex+0] *= -0.25f;
+    			mVelocities[velIndex+0] *= -0.5f;
             }
      
     		float y = mPositions[posIndex+1] + (mVelocities[velIndex+1] * timestep);
@@ -119,7 +121,7 @@ public class ParticleTestRenderer implements GLSurfaceView.Renderer {
             // change direction
             if ((mPositions[posIndex+1] <= -bounds) || (mPositions[posIndex+1] >= bounds))
             {
-            	mVelocities[velIndex+1] *= -0.8f;
+            	mVelocities[velIndex+1] *= -0.5f;
             }
     	}
     	
@@ -136,15 +138,25 @@ public class ParticleTestRenderer implements GLSurfaceView.Renderer {
         mTexVB.position(0);
     }
     
-    public void initParticles()
+    public void initParticles(float impulseX, float impulseY)
     {
     	// initial layout of particles is in a 2D grid
-    	int width = 16, height = 16; 
+    	int width = 25, height = 25; 
         mParticleCount = width * height;
         
-        mPositions  = new float[mParticleCount * 3];
-        mVelocities = new float[mParticleCount * 3];
-        mTexCoords  = new float[mParticleCount * 2];
+        if (mPositions == null)
+        {
+        	mPositions  = new float[mParticleCount * 3];
+        }
+        if (mVelocities == null)
+        {
+        	mVelocities = new float[mParticleCount * 3];
+        }
+        if (mTexCoords == null)
+        {
+        	mTexCoords  = new float[mParticleCount * 2];
+        }
+        
         
     	for (int w = 0; w < width; ++w)
         {
@@ -164,10 +176,10 @@ public class ParticleTestRenderer implements GLSurfaceView.Renderer {
                 mTexCoords[texIndex+0] = w / (float)width;
                 mTexCoords[texIndex+1] = 1.0f - h / (float)height;
 
-                float magnitude = (float)Math.sqrt((double)posx*posx + (double)posy*posy);
+                float magnitude = (float)Math.sqrt((double)(posx + impulseX)*(posx + impulseX) + (double)(posy + impulseY)*(posy + impulseY));
 
-                mVelocities[velIndex+0] = posx / magnitude;
-                mVelocities[velIndex+1] = posy / magnitude;
+                mVelocities[velIndex+0] = (posx + impulseX) / magnitude;
+                mVelocities[velIndex+1] = (posy + impulseY) / magnitude;
                 mVelocities[velIndex+2] = 0;
             }
         }
@@ -176,7 +188,7 @@ public class ParticleTestRenderer implements GLSurfaceView.Renderer {
 
     public void onSurfaceCreated(GL10 gl, EGLConfig config) 
     {
-    	initParticles();
+    	initParticles(0, 0);
         
         IntBuffer bufferIdBuffer = IntBuffer.allocate(2);
         GLES20.glGenBuffers(2, bufferIdBuffer);
