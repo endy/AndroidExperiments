@@ -14,6 +14,10 @@ import android.util.Log;
 
 public class ParticleTestRenderer implements GLSurfaceView.Renderer {
 
+	static {
+        System.loadLibrary("native_test");
+    }
+	
     String mVsSource;
     String mFsSource;
     
@@ -28,6 +32,9 @@ public class ParticleTestRenderer implements GLSurfaceView.Renderer {
     float[] mPositions;
     float[] mVelocities;
     float[] mTexCoords;
+    
+    public native void testPrint();
+    public native void testGLES2();
     
     public ParticleTestRenderer()
     {
@@ -92,6 +99,9 @@ public class ParticleTestRenderer implements GLSurfaceView.Renderer {
      
     public void updateParticles(float timestep)
     {
+    	//testPrint();
+    	
+    	
     	float bounds = 1.0f;
     	
     	timestep *= 3.0f;
@@ -105,7 +115,7 @@ public class ParticleTestRenderer implements GLSurfaceView.Renderer {
     		int posIndex = i * 3;
             int velIndex = i * 3;
             
-    		//mVelocities[velIndex+1] -= gravityDecel; // gravity is always negative
+    		mVelocities[velIndex+1] -= gravityDecel; // gravity is always negative
     		
     		float x = mPositions[posIndex+0] + (mVelocities[velIndex+0] * timestep);
     		mPositions[posIndex+0] = Math.min(bounds, Math.max(-bounds, x));
@@ -188,6 +198,7 @@ public class ParticleTestRenderer implements GLSurfaceView.Renderer {
 
     public void onSurfaceCreated(GL10 gl, EGLConfig config) 
     {
+    	testGLES2();
     	initParticles(0, 0);
         
         IntBuffer bufferIdBuffer = IntBuffer.allocate(2);
