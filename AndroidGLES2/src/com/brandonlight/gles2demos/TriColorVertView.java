@@ -10,7 +10,7 @@ public class TriColorVertView extends GLSurfaceView {
 		super(context);
 		setDebugFlags(DEBUG_CHECK_GL_ERROR | DEBUG_LOG_GL_CALLS);
 		setEGLContextClientVersion(2);
-		setRenderer(new TriColorVertRenderer());
+		setRenderer(new TouchDemoRenderer());
 	}
 
 }

@@ -4,26 +4,23 @@ import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.hardware.*;
 
-public class ParticleTestView extends GLSurfaceView {
 
-	private ParticleTestRenderer mRenderer;
+public class TouchDemoView extends GLSurfaceView {
 	
-    public ParticleTestView(Context context)
-    {
-        super(context);
-        setDebugFlags(DEBUG_CHECK_GL_ERROR | DEBUG_LOG_GL_CALLS);
-        setEGLContextClientVersion(2);
-        
-        mRenderer = new ParticleTestRenderer();
-        
-        setRenderer(mRenderer);
-        
-        
-    }
-    
-    public boolean onTouchEvent(final MotionEvent event)
+	TouchDemoRenderer mRenderer;
+	
+	public TouchDemoView(Context context)
+	{
+		super(context);
+		setDebugFlags(DEBUG_CHECK_GL_ERROR | DEBUG_LOG_GL_CALLS);
+		setEGLContextClientVersion(2);
+		mRenderer = new TouchDemoRenderer();
+		
+		setRenderer(mRenderer);
+	}
+	
+	public boolean onTouchEvent(final MotionEvent event)
     {
 
     	int width = getWidth();
@@ -33,8 +30,6 @@ public class ParticleTestView extends GLSurfaceView {
     	
     	if (event.getAction() == MotionEvent.ACTION_DOWN)
     	{
-    		mRenderer.initParticles(1.0f - ((event.getX(0)/ (float)width) * 2.0f), 
-    							    -1.0f * (1.0f - ((event.getY(0) / (float)height) * 2.0f)));
     		Log.d("INPUT", "Touch down");
     	}
     	
@@ -58,9 +53,6 @@ public class ParticleTestView extends GLSurfaceView {
     	
     	return true;
     }
-    
-    public boolean onSensorChanged(SensorEvent event)
-    {
-    	return true;
-    }
+
+
 }

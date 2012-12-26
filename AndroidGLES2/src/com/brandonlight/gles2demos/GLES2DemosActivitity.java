@@ -21,8 +21,10 @@ public class GLES2DemosActivitity extends Activity {
         super.onCreate(savedInstanceState);
         
         mGLView = new ParticleTestView(this);
-       //mGLView = new TriColorVertView(this);               
-        setContentView(mGLView);
+        
+        
+        //mGLView = new TriColorVertView(this);               
+        setContentView(mGLView); //R.layout.main);
         
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         List<Sensor> sensors = mSensorManager.getSensorList(Sensor.TYPE_ALL);
